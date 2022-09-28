@@ -12,6 +12,8 @@ p_load(tidyverse, # funciones para manipular/limpiar conjuntos de datos.
 cg <- import("input/Enero - Cabecera - Caracteristicas generales (Personas).csv") %>% clean_names()
 ocu <- import("input/Enero - Cabecera - Ocupados.csv") %>% clean_names()
 geih <- left_join(x = cg, y = ocu, by = c("directorio","secuencia_p","orden"))
+skim(geih) ##Descriptiva de la base de datos
+geih %>% select(inglabo,p6020) %>% skim()
 
 ## **[1.] Descriptivas**
 
@@ -35,6 +37,12 @@ summarise(promedio_inglabo = mean(inglabo, na.rm = T),
           media_inglabo = median(inglabo, na.rm = T),
           promedio_p6960 = mean(p6960, na.rm = T),
           media_p6960 = median(p6960, na.rm = T))
+
+geih %>% 
+group_by(p6020, p6450) %>%
+summarise(promedio_inglabo = mean(inglabo, na.rm =T))
+
+##Tambien podria obtener el maximo max_inglabo =max(inglabo, na.rm=T)
 
 ## **[2.] Visualizaciones**
 
